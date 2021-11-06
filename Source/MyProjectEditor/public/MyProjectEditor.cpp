@@ -53,6 +53,32 @@ void FMyProjectEditorModule::GenerateToolBarButton(FToolBarBuilder& Builder)
 		LOCTEXT("SimpleWidget", "SimpleWidget"),
 		LOCTEXT("SimpleWidgetToolTip", "ShowMySimpleWidgetToolTip")
 	);
+
+	//combo button
+	Builder.AddComboButton(
+		FUIAction(),
+		FOnGetContent::CreateRaw(this, &FMyProjectEditorModule::GenerateToolBarContents),
+		LOCTEXT("SimpleWidget", "SimpleWidget"),
+		LOCTEXT("SimpleWidgetToolTip", "ShowMySimpleWidgetToolTip"));
+}
+
+TSharedRef< SWidget > FMyProjectEditorModule::GenerateToolBarContents()
+{
+	FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
+	TSharedPtr<FExtender> Extender = FExtender::Combine(LevelEditorModule.GetAllLevelEditorToolbarBlueprintsMenuExtenders());
+	FMenuBuilder Builder(true, MakeShareable(new FUICommandList), Extender);
+
+	Builder.BeginSection(TEXT("SimpleWidget"), LOCTEXT("SimpleWidgetSectionName", "SimpleWidgetSection"));
+
+	Builder.AddMenuEntry(
+		LOCTEXT("ShowMySimpleWidget", "ShowMySimpleWidget"),
+		LOCTEXT("ShowMySimpleWidgetToolTip", "ShowMySimpleWidgetToolTip"),
+		FSlateIcon(),
+		FUIAction(FExecuteAction::CreateRaw(this, &FMyProjectEditorModule::ShowMySimpleWidget)));
+
+	Builder.EndSection();
+
+	return Builder.MakeWidget();
 }
 
 void FMyProjectEditorModule::ShowMySimpleWidget()

@@ -13,6 +13,7 @@ public:
 
 	void AddMenuExtension(FMenuBuilder& Builder);
 	void GenerateToolBarButton(FToolBarBuilder& Builder);
+	TSharedRef< SWidget > GenerateToolBarContents();
 	void ShowMySimpleWidget();
 	TSharedRef<SDockTab> OnShowMySimpleWidget(const FSpawnTabArgs& SpawnTabArgs);
 };
