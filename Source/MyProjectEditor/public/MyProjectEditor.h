@@ -12,8 +12,10 @@ public:
 	virtual void ShutdownModule() override;
 
 	void AddMenuExtension(FMenuBuilder& Builder);
+	void ShowMySimpleWidget();
+
 	void GenerateToolBarButton(FToolBarBuilder& Builder);
 	TSharedRef< SWidget > GenerateToolBarContents();
-	void ShowMySimpleWidget();
+
 	TSharedRef<SDockTab> OnShowMySimpleWidget(const FSpawnTabArgs& SpawnTabArgs);
 };
